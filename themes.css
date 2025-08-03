@@ -1,0 +1,36 @@
+body.light {
+  background: #e0e0e0;
+}
+
+body.light #dock {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+body.light .window {
+  background: #ffffff;
+  border-color: #bbb;
+}
+
+body.light .window-header {
+  background: #3498db;
+}
+
+/* Thème sombre */
+body.dark {
+  background: #1c1c1c;
+  color: #e0e0e0;
+}
+
+body.dark #dock {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+body.dark .window {
+  background: #2c2c2c;
+  border-color: #444;
+  color: #e0e0e0;
+}
+
+body.dark .window-header {
+  background: #555;
+}
