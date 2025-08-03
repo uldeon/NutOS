@@ -5,18 +5,23 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Phone OS</title>
-  <link rel="stylesheet" href="css/os.css">
-  <link rel="stylesheet" href="css/themes.css">
+  <link rel="stylesheet" href="os.css">
+  <link rel="stylesheet" href="themes.css">
 </head>
 <body>
   <div id="desktop"></div>
 
   <div id="dock">
-    <button class="dock-icon" onclick="launchApp('notes')">📝</button>
-    <button class="dock-icon" onclick="launchApp('browser')">🌐</button>
+    <button class="dock-icon" onclick="launchApp('notes')" title="Notes">📝</button>
+    <button class="dock-icon" onclick="launchApp('browser')" title="Navigateur">🌐</button>
+    <button class="dock-icon" onclick="launchApp('clock')" title="Horloge">⏰</button>
+    <button class="dock-icon" onclick="launchApp('gallery')" title="Galerie">🖼️</button>
+    <button class="dock-icon" onclick="launchApp('filemanager')" title="Fichiers">📂</button>
+    <button class="dock-icon" onclick="launchApp('calendar')" title="Agenda">📅</button>
+    <button class="dock-icon" onclick="launchApp('calculator')" title="Calculatrice">🧮</button>
   </div>
 
-  <script src="js/core.js"></script>
-  <script src="js/apps.js"></script>
+  <script src="core.js"></script>
+  <script src="apps.js"></script>
 </body>
 </html>
