@@ -22,7 +22,8 @@ body {
   left: 0;
   right: 0;
   height: 50px;
-  background: rgba(0,0,0,0.85);
+  background: rgba(0,0,0,0.5);
+  border-radius: 15px;
   display: flex;
   justify-content: space-around;
   align-items: center;
