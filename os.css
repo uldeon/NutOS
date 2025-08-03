@@ -17,24 +17,32 @@ body {
 }
 
 #dock {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
   height: 50px;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0,0,0,0.85);
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
+  z-index: 1000;
 }
 
 .dock-icon {
+  font-size: 28px;
   background: none;
   border: none;
-  font-size: 24px;
-  margin: 0 10px;
   color: white;
   cursor: pointer;
+  flex-grow: 1;
+  max-width: 48px;
+  padding: 5px 0;
+}
+
+#closeAllBtn {
+  color: #ff4d4d;
+  font-weight: bold;
 }
 
 .window {
