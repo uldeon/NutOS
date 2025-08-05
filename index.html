@@ -1,28 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Phone OS</title>
-  <link rel="stylesheet" href="os.css">
-  <link rel="stylesheet" href="themes.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NutOS</title>
+  <link rel="stylesheet" href="os.css" />
 </head>
 <body>
-  <div id="desktop"></div>
 
-  <div id="dock">
-    <button class="dock-icon" onclick="launchApp('notes')" title="Notes">📝</button>
-    <button class="dock-icon" onclick="launchApp('browser')" title="Navigateur">🌐</button>
-    <button class="dock-icon" onclick="launchApp('clock')" title="Horloge">⏰</button>
-    <button class="dock-icon" onclick="launchApp('gallery')" title="Galerie">🖼️</button>
-    <button id="closeAllBtn" class="dock-icon" title="Fermer toutes les fenêtres">❌</button>
-    <button class="dock-icon" onclick="launchApp('filemanager')" title="Fichiers">📂</button>
-    <button class="dock-icon" onclick="launchApp('calendar')" title="Agenda">📅</button>
-    <button class="dock-icon" onclick="launchApp('calculator')" title="Calculatrice">🧮</button>
+  <!-- Écran d'accueil -->
+  <div id="homeScreen" class="screen">
+    <div class="icon-grid">
+      <div class="app-icon" onclick="launchApp('notes')">📝<span>Notes</span></div>
+      <div class="app-icon" onclick="launchApp('browser')">🌐<span>Web</span></div>
+      <div class="app-icon" onclick="launchApp('clock')">⏰<span>Horloge</span></div>
+      <div class="app-icon" onclick="launchApp('gallery')">🖼️<span>Galerie</span></div>
+      <div class="app-icon" onclick="launchApp('filemanager')">📂<span>Fichiers</span></div>
+      <div class="app-icon" onclick="launchApp('calendar')">📅<span>Agenda</span></div>
+      <div class="app-icon" onclick="launchApp('calculator')">🧮<span>Calculatrice</span></div>
+    </div>
   </div>
 
+  <!-- Écran d'application -->
+  <div id="appScreen" class="screen" style="display:none;">
+    <div id="appContent" class="app-content"></div>
+
+    <!-- Barre de navigation -->
+    <div id="navBar">
+      <button onclick="goHome()">⚪</button>
+      <button onclick="goBack()">⬅</button>
+      <button onclick="openTaskSwitcher()">⬜</button>
+    </div>
+  </div>
+
+  <!-- Sélecteur multitâche -->
+  <div id="taskSwitcher" style="display:none;">
+    <h2>Apps ouvertes</h2>
+    <div id="taskList"></div>
+    <button onclick="closeTaskSwitcher()">Fermer</button>
+  </div>
+
+  <!-- Scripts -->
   <script src="core.js"></script>
   <script src="apps.js"></script>
+
 </body>
 </html>
