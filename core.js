@@ -1,71 +1,97 @@
-let zIndexCounter = 1;
+/* core.js - Gestion du Phone OS mobile */
 
-function createWindow(title, content) {
-  const dockHeight = 50; // hauteur dock
+let openApps = []; // Liste des apps ouvertes {name, title, content}
+let appHistory = []; // Historique pour le bouton retour
 
-  const win = document.createElement('div');
-  win.className = 'window';
+/**
+ * Lance une application en plein écran
+ * @param {string} appName - Nom de l'application
+ */
+function launchApp(appName) {
+  if (!apps[appName]) return alert("App inconnue : " + appName);
 
-  // Plein écran (moins dock)
-  win.style.top = '0px';
-  win.style.left = '0px';
-  win.style.width = '100%';
-  win.style.height = `calc(100% - ${dockHeight}px)`;
-  win.style.zIndex = zIndexCounter++;
+  // Ajout dans la liste des apps ouvertes si pas déjà
+  if (!openApps.find(a => a.name === appName)) {
+    openApps.push({
+      name: appName,
+      title: apps[appName].title,
+      content: apps[appName].content
+    });
+  }
 
-  // Header minimal (optionnel : tu peux cacher le header en mobile)
-  const header = document.createElement('div');
-  header.className = 'window-header';
-  header.innerText = title;
-  win.appendChild(header);
+  // Afficher l'écran app et cacher le home
+  document.getElementById('homeScreen').style.display = 'none';
+  document.getElementById('appScreen').style.display = 'flex';
 
-  const body = document.createElement('div');
-  body.className = 'window-content';
-  body.innerHTML = content;
-  win.appendChild(body);
+  // Charger le contenu
+  document.getElementById('appContent').innerHTML = apps[appName].content;
 
-  document.getElementById('desktop').appendChild(win);
+  // Initialisation spécifique selon l'app
+  if (appName === 'notes') initNotes();
+  if (appName === 'browser') initBrowser();
+  if (appName === 'clock') initClock();
+  if (appName === 'gallery') initGallery();
+  if (appName === 'filemanager') initFileManager();
+  if (appName === 'calendar') initCalendar();
+  if (appName === 'calculator') initCalculator();
 
-  makeDraggable(win); // si tu veux garder le drag (sinon commenter pour mobile)
-
-  return win;
+  // Ajouter à l'historique
+  appHistory.push(appName);
 }
 
-// Fermer toutes les fenêtres
-function closeAllWindows() {
-  const desktop = document.getElementById('desktop');
-  while (desktop.firstChild) {
-    desktop.removeChild(desktop.firstChild);
+/**
+ * Retourne à l'écran d'accueil
+ */
+function goHome() {
+  document.getElementById('appScreen').style.display = 'none';
+  document.getElementById('homeScreen').style.display = 'flex';
+}
+
+/**
+ * Bouton retour
+ */
+function goBack() {
+  if (appHistory.length > 1) {
+    // Supprimer l'app actuelle
+    appHistory.pop();
+    const lastApp = appHistory.pop();
+    if (lastApp) launchApp(lastApp);
+  } else {
+    goHome();
   }
 }
 
-// Ajout gestion bouton fermer tout
-document.addEventListener('DOMContentLoaded', () => {
-  const closeBtn = document.getElementById('closeAllBtn');
-  if (closeBtn) {
-    closeBtn.addEventListener('click', closeAllWindows);
-  }
-});
+/**
+ * Ouvre le multitâche
+ */
+function openTaskSwitcher() {
+  const taskList = document.getElementById('taskList');
+  taskList.innerHTML = '';
 
+  openApps.forEach((app, i) => {
+    const div = document.createElement('div');
+    div.className = 'task-item';
+    div.innerHTML = `<strong>${app.title}</strong>`;
 
-function makeDraggable(win) {
-  const header = win.querySelector('.window-header');
-  let isDragging = false, offsetX = 0, offsetY = 0;
+    const btnOpen = document.createElement('button');
+    btnOpen.textContent = "Ouvrir";
+    btnOpen.onclick = () => { closeTaskSwitcher(); launchApp(app.name); };
 
-  header.addEventListener('mousedown', e => {
-    isDragging = true;
-    offsetX = e.clientX - win.offsetLeft;
-    offsetY = e.clientY - win.offsetTop;
-    win.style.zIndex = zIndexCounter++;
+    const btnClose = document.createElement('button');
+    btnClose.textContent = "Fermer";
+    btnClose.onclick = () => { openApps.splice(i, 1); div.remove(); };
+
+    div.appendChild(btnOpen);
+    div.appendChild(btnClose);
+    taskList.appendChild(div);
   });
 
-  document.addEventListener('mousemove', e => {
-    if (!isDragging) return;
-    win.style.left = (e.clientX - offsetX) + 'px';
-    win.style.top = (e.clientY - offsetY) + 'px';
-  });
+  document.getElementById('taskSwitcher').style.display = 'block';
+}
 
-  document.addEventListener('mouseup', () => {
-    isDragging = false;
-  });
+/**
+ * Ferme le multitâche
+ */
+function closeTaskSwitcher() {
+  document.getElementById('taskSwitcher').style.display = 'none';
 }
